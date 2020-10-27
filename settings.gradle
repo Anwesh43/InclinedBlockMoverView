@@ -1,0 +1,3 @@
+include ':InclinedBlockMoverView'
+include ':app'
+rootProject.name = "My Application"
