@@ -26,6 +26,7 @@ val colors : Array<Int> = arrayOf(
 }.toTypedArray()
 val scGap : Float = 0.02f / parts
 val rot : Float = 90f + deg
+val backColor : Int = Color.parseColor("#BDBDBD")
 
 fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
@@ -184,6 +185,29 @@ class InclinedBlockMoverView(ctx : Context) : View(ctx) {
 
         fun startUpdating(cb : () -> Unit) {
             curr.startUpdating(cb)
+        }
+    }
+
+    data class Renderer(var view : InclinedBlockMoverView) {
+
+        private val animator : Animator = Animator(view)
+        private val ibm : InclinedBlockMover = InclinedBlockMover(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            ibm.draw(canvas, paint)
+            animator.animate {
+                ibm.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            ibm.startUpdating {
+                animator.start()
+            }
         }
     }
 }
