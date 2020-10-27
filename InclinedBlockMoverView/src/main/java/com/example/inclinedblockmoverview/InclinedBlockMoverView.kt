@@ -212,4 +212,13 @@ class InclinedBlockMoverView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : InclinedBlockMoverView {
+            val view : InclinedBlockMoverView = InclinedBlockMoverView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
