@@ -30,3 +30,30 @@ fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 
+fun Canvas.drawInclinedBlockMover(scale : Float, w : Float, h : Float, paint : Paint) {
+    val sf : Float = scale.sinify()
+    val lSize : Float = Math.min(w, h) / lineSizeFactor
+    val rSize : Float = Math.min(w, h) / rectSizeFactor
+    save()
+    translate(w / 2, h / 2)
+    rotate(deg * sf.divideScale(2, parts))
+    save()
+    rotate(rot * sf.divideScale(4, parts))
+    translate(
+        -lSize * (1 - sf.divideScale(3, parts)),
+        (h / 2) * (1 - sf.divideScale(1, parts))
+    )
+    drawRect(RectF(-rSize, -rSize, 0f, 0f), paint)
+    restore()
+    drawLine(0f, 0f, -lSize * sf.divideScale(0, parts), 0f, paint)
+    restore()
+}
+
+fun Canvas.drawIBMNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    paint.color = colors[i]
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
+    drawInclinedBlockMover(scale, w, h, paint)
+}
