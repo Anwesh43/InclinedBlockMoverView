@@ -43,10 +43,10 @@ fun Canvas.drawInclinedBlockMover(scale : Float, w : Float, h : Float, paint : P
     save()
     rotate(rot * sf.divideScale(4, parts))
     translate(
-        -lSize * (1 - sf.divideScale(3, parts)),
+        -lSize + (lSize - rSize) * sf.divideScale(3, parts),
         (h / 2) * (sf.divideScale(1, parts) - 1)
     )
-    drawRect(RectF(-rSize, -rSize, 0f, 0f), paint)
+    drawRect(RectF(0f, -rSize, rSize, 0f), paint)
     restore()
     drawLine(0f, 0f, -lSize * sf.divideScale(0, parts), 0f, paint)
     restore()
