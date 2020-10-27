@@ -9,7 +9,7 @@ import android.graphics.RectF
 import android.app.Activity
 import android.content.Context
 
-val parts : Int = 5
+val parts : Int = 6
 val strokeFactor : Float = 90f
 val rectSizeFactor : Float = 12.8f
 val lineSizeFactor : Float = 3.2f
@@ -25,7 +25,7 @@ val colors : Array<Int> = arrayOf(
     Color.parseColor(it)
 }.toTypedArray()
 val scGap : Float = 0.02f / parts
-val rot : Float = 90f + deg
+val rot : Float = deg
 val backColor : Int = Color.parseColor("#BDBDBD")
 
 fun Int.inverse() : Float = 1f / this
@@ -44,7 +44,7 @@ fun Canvas.drawInclinedBlockMover(scale : Float, w : Float, h : Float, paint : P
     rotate(rot * sf.divideScale(4, parts))
     translate(
         -lSize * (1 - sf.divideScale(3, parts)),
-        (h / 2) * (1 - sf.divideScale(1, parts))
+        (h / 2) * (sf.divideScale(1, parts) - 1)
     )
     drawRect(RectF(-rSize, -rSize, 0f, 0f), paint)
     restore()
